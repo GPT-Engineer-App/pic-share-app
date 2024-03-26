@@ -9,6 +9,7 @@ const Profile = ({ photos }) => {
     bio: "",
     profilePicture: "",
   });
+  const [showForm, setShowForm] = useState(false);
 
   const handleFollow = () => {
     setFollowers((current) => current + 1);
@@ -58,7 +59,31 @@ const Profile = ({ photos }) => {
         <Button leftIcon={<FaUser />} colorScheme="blue" onClick={handleFollow}>
           Follow
         </Button>
+        <Button colorScheme="blue" onClick={() => setShowForm(!showForm)} mt={4}>
+          Edit Profile
+        </Button>
       </Flex>
+      {showForm && (
+        <Box mb={8}>
+          <form onSubmit={handleSubmit}>
+            <FormControl id="name" mb={4}>
+              <FormLabel>Name</FormLabel>
+              <Input type="text" name="name" value={user.name} onChange={handleChange} />
+            </FormControl>
+            <FormControl id="bio" mb={4}>
+              <FormLabel>Bio</FormLabel>
+              <Input type="text" name="bio" value={user.bio} onChange={handleChange} />
+            </FormControl>
+            <FormControl id="profilePicture" mb={4}>
+              <FormLabel>Profile Picture URL</FormLabel>
+              <Input type="text" name="profilePicture" value={user.profilePicture} onChange={handleChange} />
+            </FormControl>
+            <Button type="submit" colorScheme="blue">
+              Save
+            </Button>
+          </form>
+        </Box>
+      )}
       <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap={4}>
         {photos.map((photo) => (
           <Box key={photo.id} borderWidth={1} borderRadius="md" padding={4}>

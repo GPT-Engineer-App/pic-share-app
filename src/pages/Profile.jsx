@@ -4,7 +4,7 @@ import { FaUser, FaEdit } from "react-icons/fa";
 
 import { useLocation } from "react-router-dom";
 
-const Profile = ({ photos }) => {
+const Profile = ({ photos = [] }) => {
   const location = useLocation();
   const { user } = location.state;
 

@@ -2,21 +2,22 @@ import React, { useState } from "react";
 import { Box, Heading, Image, Button, Grid, Text, Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { FaUser } from "react-icons/fa";
 
+import { useLocation } from "react-router-dom";
+
 const Profile = ({ photos }) => {
+  const location = useLocation();
+  const { user } = location.state;
+
   const [followers, setFollowers] = useState(0);
-  const [user, setUser] = useState({
-    name: "",
-    bio: "",
-    profilePicture: "",
-  });
+  const [userData, setUserData] = useState(user);
 
   const handleFollow = () => {
     setFollowers((current) => current + 1);
   };
 
   const handleChange = (e) => {
-    setUser({
-      ...user,
+    setUserData({
+      ...userData,
       [e.target.name]: e.target.value,
     });
   };
@@ -24,7 +25,7 @@ const Profile = ({ photos }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(user);
+    console.log(userData);
   };
 
   return (
@@ -36,15 +37,15 @@ const Profile = ({ photos }) => {
         <form onSubmit={handleSubmit}>
           <FormControl id="name" mb={4}>
             <FormLabel>Name</FormLabel>
-            <Input type="text" name="name" value={user.name} onChange={handleChange} />
+            <Input type="text" name="name" value={userData.name} onChange={handleChange} />
           </FormControl>
           <FormControl id="bio" mb={4}>
             <FormLabel>Bio</FormLabel>
-            <Input type="text" name="bio" value={user.bio} onChange={handleChange} />
+            <Input type="text" name="bio" value={userData.bio} onChange={handleChange} />
           </FormControl>
           <FormControl id="profilePicture" mb={4}>
             <FormLabel>Profile Picture URL</FormLabel>
-            <Input type="text" name="profilePicture" value={user.profilePicture} onChange={handleChange} />
+            <Input type="text" name="profilePicture" value={userData.profilePicture} onChange={handleChange} />
           </FormControl>
           <Button type="submit" colorScheme="blue">
             Save
